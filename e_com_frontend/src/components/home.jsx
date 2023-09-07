@@ -37,6 +37,11 @@ const Home = () => {
            body:JSON.stringify({product:id})
        });
        let res=await resp.json();
+       if (resp.status===401)
+        {
+            setMsg('unauthorized request, please login again')
+        }
+        else
        setMsg(res.msg)
     }
 

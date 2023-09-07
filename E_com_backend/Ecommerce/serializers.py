@@ -29,7 +29,6 @@ class OrderSerializer(ModelSerializer):
         validated_data['totalprice']=self.context['price'].objects.filter(id=self.context['id']).values()[0]['price']
         return Order.objects.create(**validated_data)
     def update(self, instance, validated_data):
-        print(self.context,instance)
         instance.quantity=self.context['quantity']
         instance.totalprice=self.context['amount']
         instance.save()

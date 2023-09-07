@@ -20,7 +20,12 @@ const Cart = () => {
             }
         });
         let res=await resp.json();
+        console.log(res)
+        if(resp.status===401)
+        setOrder([])
+    else{
         setOrder(res);
+    }
 
     }
     useEffect(()=>{all()},[]);
