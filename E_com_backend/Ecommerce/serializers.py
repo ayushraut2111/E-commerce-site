@@ -4,10 +4,13 @@ from rest_framework import serializers
 
 
 class ProductSerializer(ModelSerializer):
-    seller=serializers.CharField(source="seller.fullname")
     class Meta:
         model=Product
-        fields=['id','seller','pname','category','description','price']
+        fields=['id','seller','seller_name','pname','category','description','price']
+    def create(self, validated_data):
+        validated_data['seller']=self.context['request'].user
+        validated_data['seller_name']=self.context['request'].user.fullname
+        return Product.objects.create(**validated_data)
 
 
 class OrderSerializer(ModelSerializer):
@@ -15,9 +18,23 @@ class OrderSerializer(ModelSerializer):
     category=serializers.CharField(source="product.category",read_only=True)
     description=serializers.CharField(source="product.description",read_only=True)
     pprice=serializers.CharField(source="product.price",read_only=True)
+    seller_name=serializers.CharField(source="product.seller_name",read_only=True)
     class Meta:
         model=Order
-        fields=['id','buyer','product','pname','category','description','pprice','quantity','totalprice']
+        fields=['id','seller_name','buyer','product','pname','category','description','pprice','quantity','totalprice']
+    def create(self, validated_data):
+        validated_data['buyer']=self.context['request'].user
+        validated_data['quantity']=self.context['quantity']
+        validated_data['product_id']=self.context['id']
+        validated_data['totalprice']=self.context['price'].objects.filter(id=self.context['id']).values()[0]['price']
+        return Order.objects.create(**validated_data)
+    def update(self, instance, validated_data):
+        print(self.context,instance)
+        instance.quantity=self.context['quantity']
+        instance.totalprice=self.context['amount']
+        instance.save()
+        return instance
+         
 
 class UserSerializer(ModelSerializer):   # for signup
     password=serializers.CharField(write_only=True)  # if the fields are not defined in models then we define here after then we can use it so we have to bring all the fields here if we are passing it here from views

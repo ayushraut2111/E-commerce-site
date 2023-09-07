@@ -40,6 +40,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
     
 class Product(models.Model):
     seller=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
+    seller_name=models.CharField(max_length=100,null=True,blank=True)
     pname=models.CharField(max_length=100)
     category=models.CharField(max_length=100)
     description=models.TextField(null=True,blank=True)
@@ -51,8 +52,8 @@ class Product(models.Model):
 class Order(models.Model):
     buyer=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
-    quantity=models.IntegerField()
-    totalprice=models.FloatField()
+    quantity=models.IntegerField(null=True,blank=True)
+    totalprice=models.FloatField(null=True,blank=True)
 
     def __str__(self) -> str:
         return self.product.pname
