@@ -62,5 +62,32 @@ class UserSerializer(ModelSerializer):   # for signup
             raise serializers.ValidationError("email already exists")
         else:
             return value
+class UserSerializerBuyer(ModelSerializer):   # for signup
+    password=serializers.CharField(write_only=True)  # if the fields are not defined in models then we define here after then we can use it so we have to bring all the fields here if we are passing it here from views
+    password1=serializers.CharField(write_only=True)
+    class Meta:  # this validated data is not the data which we sent, it is the data which is processed from model so we want every field here
+        model=CustomUser
+        fields='__all__'
+
+    def create(self, validated_data):
+        return CustomUser.objects.create_seller(email=validated_data['email'],password=validated_data['password'],phone=validated_data['phone'],fullname=validated_data['fullname'],address=validated_data['address'])
+    
+    def validate(self, attrs):
+        pass1=attrs.get('password')
+        pass2=attrs.get('password1')
+        if pass1!=pass2:
+            raise serializers.ValidationError("password not matched")
+        else:
+            return attrs
+    def validate_phone(self,value):
+        if CustomUser.objects.filter(phone=value).exists():
+            raise serializers.ValidationError("phone number already exists")
+        else:
+            return value
+    def validate_email(self,value):
+        if CustomUser.objects.filter(email=value).exists():
+            raise serializers.ValidationError("email already exists")
+        else:
+            return value
     
         
