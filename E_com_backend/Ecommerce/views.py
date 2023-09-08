@@ -9,7 +9,6 @@ from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken
 from .mypermissions import Custompermission
 from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAdminUser
 
 class Signup(APIView):
@@ -69,24 +68,6 @@ class LoginSeller(APIView):
             return Response({"msg":"You are not authorized to login"},status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({"msg":"Please enter valid credentials"},status=status.HTTP_400_BAD_REQUEST)
-class AddProduct(ModelViewSet):
-    authentication_classes=[]
-    permission_classes=[]
-    queryset=Product.objects.all()
-    serializer_class=ProductSerializer
-
-    def list(self, request, *args, **kwargs):
-        values = [{'category': k, 'products': list(g)} for k, g in groupby(Product.objects.order_by('category').values(), lambda x: x['category'])]
-        # print(values)
-        return Response(values,status=status.HTTP_202_ACCEPTED)
-    
-    def create(self, request, *args, **kwargs):
-        ser=ProductSerializer(data=request.data,context={'request':request})
-        if ser.is_valid():
-            ser.save()
-            return Response(ser.data)
-        return Response({"msg":"invalid"})
-        
 
 class AddOrder(ModelViewSet):   # this view is used to make orders
     queryset=Order.objects.all()
@@ -151,4 +132,25 @@ class ViewProduct(ModelViewSet):
         values = [{'category': k, 'products': list(g)} for k, g in groupby(Product.objects.order_by('category').values(), lambda x: x['category'])]
         # print(values)
         return Response(values,status=status.HTTP_202_ACCEPTED)
+    
+class AddProduct(ModelViewSet):
+    permission_classes=[IsAdminUser]
+    queryset=Product.objects.all()
+    serializer_class=ProductSerializer
+    
+    def get_queryset(self):
+        return Product.objects.filter(seller=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+        values = [{'category': k, 'products': list(g)} for k, g in groupby(Product.objects.order_by('category').values(), lambda x: x['category'])]
+        # print(values)
+        return Response(values,status=status.HTTP_202_ACCEPTED)
+    
+    def create(self, request, *args, **kwargs):
+        ser=ProductSerializer(data=request.data,context={'request':request})
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data)
+        return Response({"msg":"invalid"})
+        
     

@@ -32,7 +32,7 @@ const Login = () => {
         // console.log(getmsg);
         if(res.status===202){
         dispatch(addToken(getmsg.token.refresh))
-            navigate('/sellerpage');
+            navigate('/seller');
         }
         setMsg1(getmsg);
     }

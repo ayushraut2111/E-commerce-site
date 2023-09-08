@@ -22,3 +22,12 @@ urlpatterns = [
     path('loginseller/',views.LoginSeller.as_view()),
 
 ]
+
+
+# http://127.0.0.1:8000/product/
+# {
+#     "pname":"mobile phone",
+#     "category":"mobiles",
+#     "description":"hello i am phone",
+#     "price":"123"
+# }
