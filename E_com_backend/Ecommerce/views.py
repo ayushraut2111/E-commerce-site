@@ -68,6 +68,13 @@ class LoginSeller(APIView):
             return Response({"msg":"You are not authorized to login"},status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({"msg":"Please enter valid credentials"},status=status.HTTP_400_BAD_REQUEST)
+        
+class Logout(APIView):
+    authentication_classes=[]
+    permission_classes=[]
+    def get(self,request):
+        auth.logout(request)
+        return Response({"msg":"Logout successfull"},status=status.HTTP_202_ACCEPTED)
 
 class AddOrder(ModelViewSet):   # this view is used to make orders
     queryset=Order.objects.all()
@@ -133,24 +140,21 @@ class ViewProduct(ModelViewSet):
         # print(values)
         return Response(values,status=status.HTTP_202_ACCEPTED)
     
-class AddProduct(ModelViewSet):
+class AddProduct(ModelViewSet):  # this is the view for seller with which he can make requests
     permission_classes=[IsAdminUser]
     queryset=Product.objects.all()
     serializer_class=ProductSerializer
-    
-    def get_queryset(self):
-        return Product.objects.filter(seller=self.request.user)
+
 
     def list(self, request, *args, **kwargs):
-        values = [{'category': k, 'products': list(g)} for k, g in groupby(Product.objects.order_by('category').values(), lambda x: x['category'])]
-        # print(values)
+        values = [{'category': k, 'products': list(g)} for k, g in groupby(Product.objects.all().filter(seller=request.user).order_by('category').values(), lambda x: x['category'])]
         return Response(values,status=status.HTTP_202_ACCEPTED)
     
     def create(self, request, *args, **kwargs):
         ser=ProductSerializer(data=request.data,context={'request':request})
         if ser.is_valid():
             ser.save()
-            return Response(ser.data)
+            return Response({"msg":"product added"},status=status.HTTP_202_ACCEPTED)
         return Response({"msg":"invalid"})
         
     

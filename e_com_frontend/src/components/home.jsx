@@ -44,11 +44,21 @@ const Home = () => {
         else
        setMsg(res.msg)
     }
+    const logout=async ()=>{
+        let url='http://127.0.0.1:8000/logout/';
+        let f=await fetch(url);
+        let resp=await f.json();
+        if(f.status===202){
+            navigate('/login')
+        }
+    }
 
   return (
     <div className='home'>
       <div className="navbar">
         <button type='button' onClick={()=>navigate('/cart')}>Cart</button>
+        <br />
+        <button type='button' onClick={logout}>Log out</button>
         <h3>{msg}</h3>
       </div>
       <div className="products">
