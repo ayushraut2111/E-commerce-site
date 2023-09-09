@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { GetAccess } from './access'
 import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const Home = () => {

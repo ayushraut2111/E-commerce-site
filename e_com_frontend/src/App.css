@@ -1,6 +1,6 @@
 *{
   margin: 0;
-  padding: 0;
+  padding:0;
   font-family: 'garamond', cursive, monospace;
 }
 
@@ -83,4 +83,56 @@
 }
 .regleft,.regright,.loginleft,.loginright {
   text-align: center;
+}
+.bg-body-tertiary{
+  border-radius: 2vh;
+}
+.sellermain{
+  background-color: rgb(230, 214, 254);
+  height:100vh;
+}
+.sellernav{
+  padding: 1vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgb(11, 11, 11);
+  color: white;
+  border-radius: 3vh;
+  margin-bottom: 2vh;
+}
+.sellerform{
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+}
+.sellernav button{
+  border: none;
+  width: 5vw;
+  border-radius: 10px;
+}
+.sellernav button:hover{
+  opacity: 0.5;
+}
+.addproduct{
+  padding:1vh;
+}
+.addproduct input{
+  text-align: center;
+  border-radius: 3vw;
+  color: darkblue;
+  border: none;
+}
+.addproduct button{
+  border: none;
+  padding: 1vh;
+  border-radius: 10px;
+  background-color: cadetblue;
+}
+.addproduct button:hover{
+  opacity: 0.8;
+
+}
+.sellerimage{
+  padding-left: 1vw;
 }

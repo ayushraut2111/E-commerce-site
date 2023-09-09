@@ -2,6 +2,9 @@ import React,{useState,useEffect} from 'react'
 import { GetAccess } from './access'
 import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Seller = () => {
     const data=useSelector((state)=>{
@@ -16,6 +19,7 @@ const Seller = () => {
     const all=async()=>{
         let url="http://127.0.0.1:8000/addproduct/";
         let access=await GetAccess(data);
+        // console.log(access);
         let resp=await fetch(url,{
             method:"get",
             headers:{
@@ -25,7 +29,6 @@ const Seller = () => {
         });
         let res=await resp.json();
         // console.log(res);
-        setProduct(res);
     }
     useEffect(()=>{all()},[]);
     const handleChange=(e)=>{
@@ -78,10 +81,14 @@ const Seller = () => {
     }
   return (
     <div className='sellermain'>
-        <button type='button' onClick={logout}>Log out</button>
+        <nav className="sellernav">
+            <h4>Welcome to the shop</h4>
+          <button type='button' onClick={logout}>Log out</button>
+        </nav>
         <div className="addproduct">
-            <form onSubmit={handleSubmit}>
-                <input type="file"   onChange={(e)=>setDetail({...detail,pimage:e.target.files[0]})} name='pimage' placeholder='product image' />
+            <h1 className='reghead'>Add a new item to the shop</h1>
+            <form onSubmit={handleSubmit} className='sellerform'>
+                <input type="file"  className='sellerimage' onChange={(e)=>setDetail({...detail,pimage:e.target.files[0]})} name='pimage' placeholder='product image' />
                 <input type="text"   onChange={handleChange} name='pname' value={detail.pname} placeholder='product name' />
                 <input type="text"   onChange={handleChange} name='category' value={detail.category} placeholder='category' />
                 <input type="text"   onChange={handleChange} name='description' value={detail.description} placeholder='description' />
@@ -104,7 +111,6 @@ const Seller = () => {
                                     // console.log(url)
                                     return(
                                         <div>
-                                            {/* {pds.pimage} */}
                                             <h3>Product name:-{pds.pname}</h3>
                                             <img style={{height:'5cm',width:'5cm'}} src={url} alt='img' />
                                             <h5>price:-{pds.price}</h5>
@@ -125,4 +131,28 @@ const Seller = () => {
   )
 }
 
-export default Seller
+export default Seller;
+
+
+
+
+// import Container from 'react-bootstrap/Container';
+// import Navbar from 'react-bootstrap/Navbar';
+
+// function TextLinkExample() {
+//   return (
+//     <Navbar className="bg-body-tertiary">
+//       <Container>
+//         <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
+//         <Navbar.Toggle />
+//         <Navbar.Collapse className="justify-content-end">
+//           <Navbar.Text>
+//             Signed in as: <a href="#login">Mark Otto</a>
+//           </Navbar.Text>
+//         </Navbar.Collapse>
+//       </Container>
+//     </Navbar>
+//   );
+// }
+
+// export default TextLinkExample;
