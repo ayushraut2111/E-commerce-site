@@ -151,6 +151,7 @@ class AddProduct(ModelViewSet):  # this is the view for seller with which he can
         return Response(values,status=status.HTTP_202_ACCEPTED)
     
     def create(self, request, *args, **kwargs):
+        print(request.FILES['pimage'])
         ser=ProductSerializer(data=request.data,context={'request':request})
         if ser.is_valid():
             ser.save()

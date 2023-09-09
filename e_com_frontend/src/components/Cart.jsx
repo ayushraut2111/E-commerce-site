@@ -68,9 +68,11 @@ const Cart = () => {
         </div>
       {
         order.map((ord)=>{
+            let url=`http://127.0.0.1:8000/media/${ord.pimage}`;
             return(
                 <div className="component">
                     <h2>name:-{ord.pname}</h2>
+                    <img style={{height:'5cm',width:'5cm'}} src={url} alt='img' />
                     <h3>price:-{ord.pprice}</h3>
                     <h3>quantity-{ord.quantity}</h3>
                     <h3>Totalprice:-{ord.totalprice}</h3>

@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
+from django.dispatch import receiver
+import os
+
+
 
 
 class CustomManager(BaseUserManager):
@@ -41,6 +45,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
 class Product(models.Model):
     seller=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
     seller_name=models.CharField(max_length=100,null=True,blank=True)
+    pimage=models.FileField(upload_to="images")
     pname=models.CharField(max_length=100)
     category=models.CharField(max_length=100)
     description=models.TextField(null=True,blank=True)
@@ -57,4 +62,14 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return self.product.pname
+    
+
+@receiver(models.signals.post_delete, sender=Product)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    if instance.pimage:
+        if os.path.isfile(instance.pimage.path):
+            try:
+                os.remove(instance.pimage.path)
+            except:
+                pass
 

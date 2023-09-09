@@ -6,22 +6,24 @@ from rest_framework import serializers
 class ProductSerializer(ModelSerializer):
     class Meta:
         model=Product
-        fields=['id','seller','seller_name','pname','category','description','price']
+        fields=['id','seller','seller_name','pimage','pname','category','description','price']
     def create(self, validated_data):
         validated_data['seller']=self.context['request'].user
         validated_data['seller_name']=self.context['request'].user.fullname
+        validated_data['pimage']=self.context['request'].FILES['pimage']
         return Product.objects.create(**validated_data)
 
 
 class OrderSerializer(ModelSerializer):
     pname=serializers.CharField(source="product.pname",read_only=True)    # to view referenced field details in this api also
+    pimage=serializers.CharField(source="product.pimage",read_only=True)    # to view referenced field details in this api also
     category=serializers.CharField(source="product.category",read_only=True)
     description=serializers.CharField(source="product.description",read_only=True)
     pprice=serializers.CharField(source="product.price",read_only=True)
     seller_name=serializers.CharField(source="product.seller_name",read_only=True)
     class Meta:
         model=Order
-        fields=['id','seller_name','buyer','product','pname','category','description','pprice','quantity','totalprice']
+        fields=['id','seller_name','buyer','product','pname','pimage','category','description','pprice','quantity','totalprice']
     def create(self, validated_data):
         validated_data['buyer']=self.context['request'].user
         validated_data['quantity']=self.context['quantity']

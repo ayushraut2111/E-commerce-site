@@ -9,7 +9,7 @@ const Seller = () => {
     });
     // console.log(data)
     const [Product,setProduct]=useState([]);
-    const [detail,setDetail]=useState({pname:"",category:"",description:"",price:""});
+    const [detail,setDetail]=useState({pname:"",pimage:"",category:"",description:"",price:""});
     const [msg,setMsg]=useState('');
     const navigate=useNavigate();
     // console.log(data)
@@ -37,20 +37,34 @@ const Seller = () => {
     console.log(Product)
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        const dta=JSON.stringify(detail);
+        // console.log(detail)
+        // const dta=JSON.stringify(detail);
         // console.log(data)
         let url="http://127.0.0.1:8000/addproduct/";
         let access=await GetAccess(data);
+        // let res=await fetch(url,{
+        //     method:'post',
+        //     headers:{
+        //         'Authorization':'Bearer '+ String(access),
+        //         'Content-type': 'application/json',
+        //     },
+        //     body:dta
+        // });
+        let formdata = new FormData();
+        formdata.append('pname',detail.pname);
+        formdata.append('pimage',detail.pimage);
+        formdata.append('category',detail.category);
+        formdata.append('description',detail.description);
+        formdata.append('price',detail.price);
+        // console.log(formdata)
         let res=await fetch(url,{
             method:'post',
             headers:{
-                'Authorization':'Bearer '+ String(access),
-                'Content-type': 'application/json',
-            },
-            body:dta
-        });
-        // let getmsg=await res.json();
-        // console.log(getmsg);
+                'Authorization':'Bearer '+ String(access)
+            },body:formdata
+        })
+        let getmsg=await res.json();
+        console.log(getmsg);
         all();
     }
     // console.log(msg);
@@ -80,6 +94,7 @@ const Seller = () => {
         <button type='button' onClick={logout}>Log out</button>
         <div className="addproduct">
             <form onSubmit={handleSubmit}>
+                <input type="file"   onChange={(e)=>setDetail({...detail,pimage:e.target.files[0]})} name='pimage' placeholder='product image' />
                 <input type="text"   onChange={handleChange} name='pname' value={detail.pname} placeholder='product name' />
                 <input type="text"   onChange={handleChange} name='category' value={detail.category} placeholder='category' />
                 <input type="text"   onChange={handleChange} name='description' value={detail.description} placeholder='description' />
@@ -98,9 +113,13 @@ const Seller = () => {
                         <div className="catprod">
                             {
                                 prod.products.map((pds)=>{
+                                    let url=`http://127.0.0.1:8000/media/${pds.pimage}`;
+                                    // console.log(url)
                                     return(
                                         <div>
+                                            {/* {pds.pimage} */}
                                             <h3>Product name:-{pds.pname}</h3>
+                                            <img style={{height:'5cm',width:'5cm'}} src={url} alt='img' />
                                             <h5>price:-{pds.price}</h5>
                                             <h5>description :-{pds.description}</h5>
                                             <button type='button' onClick={()=>handleDelete(pds.id)}>Delete</button>

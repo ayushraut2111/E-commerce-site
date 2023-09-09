@@ -71,9 +71,12 @@ const Home = () => {
                         <div className="catprod">
                             {
                                 prod.products.map((pds)=>{
+                                    let url=`http://127.0.0.1:8000/media/${pds.pimage}`;
+                                    console.log(url)
                                     return(
                                         <div>
                                             <h3>{pds.pname}</h3>
+                                            <img style={{height:'5cm',width:'5cm'}} src={url} alt='img' />
                                             <h5>{pds.price}</h5>
                                             <h5>{pds.description}</h5>
                                             <h5>{pds.seller_name}</h5>
