@@ -4,8 +4,6 @@ from django.dispatch import receiver
 import os
 
 
-
-
 class CustomManager(BaseUserManager):
     def create_user(self,email,password,**kwargs):
         if not email:
@@ -45,7 +43,7 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
 class Product(models.Model):
     seller=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
     seller_name=models.CharField(max_length=100,null=True,blank=True)
-    pimage=models.FileField(upload_to="images")
+    pimage=models.FileField(upload_to="images",null=True,blank=True)
     pname=models.CharField(max_length=100)
     category=models.CharField(max_length=100)
     description=models.TextField(null=True,blank=True)

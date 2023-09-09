@@ -69,9 +69,11 @@ const Login = () => {
     // console.log(data)
     // console.log(msg)
   return (
+    <div className="loginmain">
+         <h1 className='reghead'>Login</h1>
     <div className='login'>
         <div className="loginleft">
-        <h1>login as seller</h1>
+        <h1>Seller</h1>
         <h3>{msg1.msg}</h3>
             <form action="" className="logform" onSubmit={handleSubmit1}>
             <input type="text" onChange={handleChange1} value={detail1.email} name='email' placeholder='Email' className="buyinp" />
@@ -82,7 +84,7 @@ const Login = () => {
             </form>
         </div>
         <div className="loginright">
-        <h1>login as buyer</h1>
+        <h1>Buyer</h1>
         <h3>{msg.msg}</h3>
             <form action="" className="logform" onSubmit={handleSubmit}>
             <input type="text" onChange={handleChange} value={detail.email} name='email' placeholder='Email' className="buyinp" />
@@ -92,7 +94,7 @@ const Login = () => {
             <button onClick={()=>navigate('/signup')}>Signup</button>
             </form>
         </div>
-      
+        </div>
     </div>
   )
 }

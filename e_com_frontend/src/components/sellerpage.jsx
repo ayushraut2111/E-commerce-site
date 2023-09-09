@@ -37,26 +37,14 @@ const Seller = () => {
     console.log(Product)
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        // console.log(detail)
-        // const dta=JSON.stringify(detail);
-        // console.log(data)
         let url="http://127.0.0.1:8000/addproduct/";
         let access=await GetAccess(data);
-        // let res=await fetch(url,{
-        //     method:'post',
-        //     headers:{
-        //         'Authorization':'Bearer '+ String(access),
-        //         'Content-type': 'application/json',
-        //     },
-        //     body:dta
-        // });
         let formdata = new FormData();
         formdata.append('pname',detail.pname);
         formdata.append('pimage',detail.pimage);
         formdata.append('category',detail.category);
         formdata.append('description',detail.description);
         formdata.append('price',detail.price);
-        // console.log(formdata)
         let res=await fetch(url,{
             method:'post',
             headers:{
@@ -67,7 +55,6 @@ const Seller = () => {
         console.log(getmsg);
         all();
     }
-    // console.log(msg);
 
     const handleDelete=async(id)=>{
         console.log(id);

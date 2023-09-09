@@ -60,12 +60,14 @@ const Register = () => {
     }
     console.log(msg)
   return (
+    <div className="regmain">
+        <h1 className='reghead'>Register</h1>
       <div className='register'>
         <div className="regleft">
-        <h1>register as seller</h1>
+        <h2>Seller</h2>
         <h3>{msg1}</h3>
-      <div className="buyerform">
-        <form className='refgorm' onSubmit={handleSubmit1}>
+       <div className="buyerform">
+        <form className='regform' onSubmit={handleSubmit1}>
             <input type="text" onChange={handleChange1} value={detail1.fullname} name='fullname' placeholder='FullName' className="buyinp" />
             <input type="text" onChange={handleChange1} value={detail1.phone} name='phone' placeholder='Phone' className="buyinp" />
             <input type="text" onChange={handleChange1} value={detail1.email} name='email' placeholder='Email' className="buyinp" />
@@ -73,16 +75,16 @@ const Register = () => {
             <input type="password" onChange={handleChange1} value={detail1.password} name='password' placeholder='Password' className="buyinp" />
             <input type="password" onChange={handleChange1} value={detail1.password1} name='password1' placeholder='Confirm Password' className="buyinp" />
             <br />
-            <button type='submit'>Signup</button>
+            <button type='submit' >Signup</button>
             <button onClick={()=>navigate('/login')}>Login</button>
         </form>
       </div>
         </div>
         <div className="regright">
-        <h1>register as buyer</h1>
+        <h2>Buyer</h2>
         <h3>{msg}</h3>
       <div className="buyerform">
-        <form className='refgorm' onSubmit={handleSubmit}>
+        <form className='regform' onSubmit={handleSubmit}>
             <input type="text" onChange={handleChange} value={detail.fullname} name='fullname' placeholder='FullName' className="buyinp" />
             <input type="text" onChange={handleChange} value={detail.phone} name='phone' placeholder='Phone' className="buyinp" />
             <input type="text" onChange={handleChange} value={detail.email} name='email' placeholder='Email' className="buyinp" />
@@ -95,6 +97,7 @@ const Register = () => {
         </form>
       </div>
         </div>
+    </div>
     </div>
   )
 }

@@ -1,38 +1,86 @@
-.App {
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'garamond', cursive, monospace;
+}
+
+.register,.login{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height:94vh;
+}
+.regmain{
+  background-color:rgb(154, 219, 213)
+
+}
+.loginmain{
+  background-color: rgb(219, 213, 213);
+}
+.reghead{
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.buyinp{
+  margin: 1vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.regform,.logform{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 3vh;
+  background: #23463f;
+  border-radius: 15px ;
+}
+
+.buyerform button{
+  margin: 1vh;
+  padding: 1vh;
+  background-color: #04AA6D;
   color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 2vh;
 }
-
-.App-link {
-  color: #61dafb;
+.logform button{
+  margin: 1vh;
+  padding: 1vh;
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 2vh;
 }
+.buyerform button:hover{
+    opacity: 0.8;
+  }
+  .logform button:hover{
+    opacity: 0.8;
+  }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.buyerform input{
+  padding: 1vh;
+  text-align: center;
+  width: 60vh;
+  border-radius: 3vh;
+  border: none;
+  background-color: aliceblue;
+
+}
+.logform input{
+  padding: 1vh;
+  text-align: center;
+  width: 60vh;
+  border-radius: 3vh;
+  border: none;
+  background-color: aliceblue;
+
+}
+.regleft,.regright,.loginleft,.loginright {
+  text-align: center;
 }
