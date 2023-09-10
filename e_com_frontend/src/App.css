@@ -89,7 +89,6 @@
 }
 .sellermain{
   background-color: rgb(230, 214, 254);
-  height:100vh;
 }
 .sellernav{
   padding: 1vh;
@@ -135,4 +134,35 @@
 }
 .sellerimage{
   padding-left: 1vw;
+}
+.prodimg{
+  margin-right: 10px;
+  border-radius: 3vw;
+}
+.cathead h2{
+  text-align: center;
+}
+.catprod{
+  padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.prodgrid{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: rgba(199, 135, 194, 0.425);
+  width: 45vw;
+  border-radius: 3vw;
+  
+}
+.prodgrid button{
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+}
+.prodgrid button:hover{
+  opacity: 0.8;
 }

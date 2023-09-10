@@ -28,7 +28,8 @@ const Seller = () => {
             
         });
         let res=await resp.json();
-        // console.log(res);
+        console.log(res);
+        setProduct(res)
     }
     useEffect(()=>{all()},[]);
     const handleChange=(e)=>{
@@ -97,12 +98,11 @@ const Seller = () => {
             </form>
         </div>
         <div className="sellerproduct">
-        <div className="products">
         {
             Product.map((prod)=>{
                 console.log(prod)
                 return(
-                    <div className="category">
+                    <div className="cathead">
                         <h2>Category :-{prod.category}</h2>
                         <div className="catprod">
                             {
@@ -110,22 +110,23 @@ const Seller = () => {
                                     let url=`http://127.0.0.1:8000/media/${pds.pimage}`;
                                     // console.log(url)
                                     return(
-                                        <div>
+                                        <div className='prodgrid'>
+                                            <img className='prodimg' style={{height:'5cm',width:'5cm'}} src={url} alt='img' />
+                                            <div className="prod">
                                             <h3>Product name:-{pds.pname}</h3>
-                                            <img style={{height:'5cm',width:'5cm'}} src={url} alt='img' />
                                             <h5>price:-{pds.price}</h5>
                                             <h5>description :-{pds.description}</h5>
                                             <button type='button' onClick={()=>handleDelete(pds.id)}>Delete</button>
+                                            </div>
                                         </div>
                                     )
                                 })
                             }
+                            </div>
                         </div>
-                    </div>
                 )
             })
         }
-      </div>
         </div>
     </div>
   )
